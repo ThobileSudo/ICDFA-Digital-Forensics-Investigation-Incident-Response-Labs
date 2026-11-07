@@ -1,266 +1,217 @@
-Lab 1B: PC System Fundamentals, Disk Sectors and Partition Analysis
-
-
-
-Overview
-
-This repository documents the completed Lab 1B assignment for CIP-B101:
-Basic Computer Skills for Digital Forensics.
-
-The practical assignment explores core computer-system concepts and
-introductory digital-forensics techniques. It covers system
-identification, evidence sources, process investigation, disk-sector
-calculations, partition analysis, boot architecture, and file-system
-interpretation.
-
-The work combines practical system inspection using Windows tools and
-Kali Linux with written explanations and calculations.
-
-Assignment Information
-
-  -----------------------------------------------------------------------
-  Item                                Details
-  ----------------------------------- -----------------------------------
-  Course code                         CIP-B101
-
-  Course title                        Basic Computer Skills for Digital
-                                      Forensics
-
-  Lab                                 Lab 1B
-
-  Assignment title                    PC System Fundamentals, Disk
-                                      Sectors and Partition Analysis
-
-  Student                             Thobile Ngcobo
-
-  Student ID                          C11/26/PCDFIR/17041
-
-  Date completed                      07 November 2026
-
-  Platforms / tools                   Kali Linux, Windows PowerShell,
-                                      Windows CMD
-  -----------------------------------------------------------------------
-
-Objectives
-
-The assignment demonstrates the ability to:
-
--   Identify basic computer and storage-system specifications.
--   Recognise digital evidence that may be present across different
-    system layers.
--   Inspect running programs and processes and understand process
-    identifiers (PIDs).
--   Explain the relationship between programs, processes, and threads.
--   Calculate disk capacity from geometry and sector-size information.
--   Interpret partition entries and calculate partition sizes.
--   Describe the Windows boot process in both legacy BIOS/MBR and
-    UEFI/GPT environments.
--   Identify common file systems and explain their relevance to
-    digital-forensic investigations.
--   Compare calculated partition information with
-    operating-system-reported information.
-
-Assignment Coverage
-
-Part A — System Identification and Evidence Layer Mapping
-
-This section records basic system and storage information and maps
-possible evidence sources to different computer-system layers.
-
-Evidence layers considered include:
-
--   Users: usernames, passwords, and user activity traces.
--   Applications: chat records, browsing activity, and shopping history.
--   Operating system: event logs, registry information, user profiles,
-    installed programs, and connected USB devices.
--   Device hardware: serial numbers, boot order, BIOS/UEFI settings, and
-    Secure Boot state.
--   Memory (RAM): running programs, process IDs, open network
-    connections, and other live information.
-
-The assignment also explains why evidence relating to one activity may
-be found across several layers. Cross-checking those traces can help
-investigators corroborate findings.
-
-Part B — Program, Process and Thread Investigation
-
-This section examines running processes and records examples with their
-process identifiers (PIDs), including:
-
-  -------------------------------------------------------------------------
-  Process                                PID recorded Likely purpose
-  ---------------------- ---------------------------- ---------------------
-  AggregatorHost                                 6928 Windows background
-                                                      diagnostics component
-
-  Chrome                                        14980 Web browsing
-
-  ApplicationFrameHost                           5712 Hosts modern Windows
-                                                      application windows
-  -------------------------------------------------------------------------
-
-It also distinguishes between:
-
--   Program: a saved set of instructions.
--   Process: a program that has started executing and has an allocated
-    process ID and memory space.
--   Thread: a unit of work within a process; a process may contain
-    multiple threads.
-
-The section discusses how process information can assist live forensic
-triage and malware analysis, including identifying suspicious activity
-that may not be apparent from disk information alone.
-
-Part C — Disk Sector and Disk Size Calculation
-
-This section applies sector-based calculations to estimate disk
-capacity.
-
-The assignment uses a sector size of 512 bytes and demonstrates
-conversions between:
-
--   Sectors and bytes
--   Bytes and kilobytes
--   Kilobytes and megabytes
--   Megabytes and gigabytes
-
-It also calculates partition sizes using:
-
-Partition size (GB) = Number of sectors × 512 ÷ 1024 ÷ 1024 ÷ 1024
-
-The partition examples documented in the assignment are:
-
-  ---------------------------------------------------------------------------
-  Partition   Type            Starting     Number of   Sector size File
-                                sector       sectors               system
-  ----------- ---------- ------------- ------------- ------------- ----------
-  Partition 1 System             2,048       204,800     512 bytes FAT32
-              (EFI)                                                
-
-  Partition 2 Reserved         206,848        32,768     512 bytes None
-              (MSR)                                                
-  ---------------------------------------------------------------------------
-
-The calculated sizes are approximately 0.0977 GB (100 MB) for the EFI
-partition and 0.0156 GB (16 MB) for the MSR partition.
-
-Part D — Windows Disk Inspection
-
-The assignment documents Windows-based methods for inspecting disks and
-partitions, including:
-
--   Disk Management
--   Windows PowerShell
--   DiskPart
-
-These tools provide different ways to inspect disk layout, partition
-information, and storage configuration.
-
-Part E — MBR, GPT and the Boot Process
-
-This section explains the main stages involved in starting a computer:
-
-1.  Power-on and CPU startup.
-2.  Power-On Self-Test (POST).
-3.  BIOS/UEFI firmware initialisation.
-4.  Identification of a bootable device using the boot order.
-5.  Locating the appropriate boot record or EFI boot entry.
-6.  Starting the boot loader or boot manager.
-7.  Loading the operating-system kernel.
-8.  Starting operating-system services and drivers and presenting the
-    login screen.
-
-It distinguishes between:
-
--   Legacy BIOS with MBR: firmware reads the Master Boot Record in
-    sector 0 and uses its boot code to locate the active partition.
--   UEFI with GPT: firmware uses a boot entry to load a boot file from
-    the EFI System Partition.
-
-The assignment identifies the system used for the practical work as
-UEFI-based.
-
-Part F — File-System Identification and Interpretation
-
-The assignment identifies the following file-system usage:
-
--   NTFS: used by the C: and D: volumes.
--   FAT32: used by the EFI System partition.
-
-It explains the role of a file system in organising raw disk sectors
-into files and folders, and discusses forensic relevance, including:
-
--   File metadata and timestamps.
--   The NTFS Master File Table (MFT).
--   Deleted-file recovery and unallocated space.
--   Slack space and remnants of previous data.
--   Selecting suitable forensic tools and methods for different file
-    systems.
--   Using file-system characteristics as clues about a system’s
-    configuration.
-
-Part G — Final Comparison
-
-The final section compares partition calculations with information
-reported by the operating system.
-
-It notes that the partition-table calculation and operating-system
-information agree, while reported volume sizes may differ slightly
-because of file-system structures and unit conversion or rounding
-conventions.
-
-Tools and Technologies
-
-  Tool / technology    Use in the assignment
-  -------------------- ---------------------------------------------------
-  Kali Linux           Digital-forensics learning and system environment
-  Windows PowerShell   Storage and volume inspection
-  Windows CMD          Command-line system inspection
-  Disk Management      Graphical disk and partition inspection
-  DiskPart             Disk and partition command-line inspection
-  NTFS / FAT32         File-system identification and interpretation
-  BIOS / UEFI          Firmware and boot-process concepts
-  MBR / GPT            Partitioning and boot architecture concepts
-
-Key Learning Outcomes
-
-Through this practical assignment, the following foundational concepts
-were explored:
-
--   A computer can contain useful digital evidence across hardware,
-    operating-system, application, user, and memory layers.
--   Running-process information provides a view of system activity at
-    the time of examination.
--   Disk capacity and partition sizes can be derived from sector counts
-    and sector sizes.
--   MBR and GPT systems use different approaches to locating boot
-    information.
--   File systems organise data and preserve metadata that may support
-    forensic timelines and recovery work.
--   Comparing command-line output, graphical tools, and manual
-    calculations helps validate findings.
-
-Repository Contents
-
-Suggested repository structure:
-
-    CIP-B101-LAB1B/
-    ├── README.txt
-    └── CIP_B101_LAB1B_THOBILE_NGCOBO_17041.pdf
-
-The PDF is the completed assignment submission. This README provides a
-project-style overview of its scope, tools, and learning outcomes.
-
-Author
-
 Thobile Ngcobo
-CIP-B101 — Basic Computer Skills for Digital Forensics
-
-------------------------------------------------------------------------
-
-This repository is intended for educational and portfolio purposes. The
-practical findings and descriptions are based on the completed Lab 1B
-assignment.
+================================================================================
+ 
+# PC System Fundamentals, Disk Sectors and Partition Analysis
+ 
+![Course](https://img.shields.io/badge/Course-CIP--B101-0B2A5B)
+![Lab](https://img.shields.io/badge/Lab-1B-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%20Kali%20(WSL)-informational)
+![Approach](https://img.shields.io/badge/Approach-Read--only%20forensics-success)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+ 
+A practical digital-forensics lab for **ICDFA CIP-B101: Basic Computer Skills for Digital Forensics**.
+It documents a safe, read-only examination of a Windows 10 laptop: identifying the system,
+mapping evidence layers, observing processes, calculating disk and partition sizes from
+sector counts, and **verifying two partitions directly from the raw GPT partition table**.
+ 
+> **Forensic mindset:** observe, record, calculate, verify, and document. Never change the evidence.
+ 
+---
+ 
+## Table of contents
+ 
+- [Objectives](#objectives)
+- [Key findings](#key-findings)
+- [Environment](#environment)
+- [Repository structure](#repository-structure)
+- [Methodology](#methodology)
+- [Commands used](#commands-used)
+- [Highlight: verifying partitions from the raw GPT table](#highlight-verifying-partitions-from-the-raw-gpt-table)
+- [Skills demonstrated](#skills-demonstrated)
+- [Safety and ethics](#safety-and-ethics)
+- [Academic integrity](#academic-integrity)
+- [Author](#author)
+- [Acknowledgements](#acknowledgements)
+ 
+---
+ 
+## Objectives
+ 
+| # | Objective |
+|---|-----------|
+| 1 | Capture the system specification and storage layout without altering the machine |
+| 2 | Map digital-evidence sources to the layers of a computer system |
+| 3 | Distinguish a program, a process and a thread, and use live process data (PIDs) |
+| 4 | Calculate disk and partition sizes from sector counts and sector size |
+| 5 | Inspect the partition table with read-only tools (Disk Management, PowerShell, raw bytes) |
+| 6 | Explain the PC boot sequence and compare MBR with GPT |
+| 7 | Identify file systems (NTFS, FAT32, ext4) and explain why they matter in forensics |
+| 8 | **Verify partitions 1 and 2 from partition-table evidence and compare with the OS** |
+ 
+---
+ 
+## Key findings
+ 
+| Area | Result |
+|------|--------|
+| Boot mode | **UEFI** (BIOS Mode: UEFI, Secure Boot: Off) |
+| Partition style | **GPT** on both internal disks (512-byte logical sectors) |
+| Partition 1 (Disk 0) | EFI System, FAT32 volume. Sectors 2,048 to 206,847 = **204,800 sectors = 0.0977 GB (100 MB)** |
+| Partition 2 (Disk 0) | Microsoft Reserved (no file system). Sectors 206,848 to 239,615 = **32,768 sectors = 0.0156 GB (16 MB)** |
+| Verification | Raw GPT values **match Windows `Get-Partition` exactly** (104,857,600 and 16,777,216 bytes) |
+| File systems found | NTFS (C:, D:, Recovery), FAT32 (EFI System partitions), ext4 (Kali on WSL, supplementary) |
+| Slide exercise | 400 x 12 x 17,000 sectors x 512 bytes = **38.91 GB** |
+ 
+---
+ 
+## Environment
+ 
+| Item | Value |
+|------|-------|
+| Machine | CONNEX L1430-PRO laptop |
+| OS | Microsoft Windows 10 Home, version 10.0.19045 (build 19045), x64 |
+| Processor | Intel Celeron N3350 @ 1.10 GHz, 2 cores |
+| Memory | 4.00 GB installed |
+| Firmware | American Megatrends BIOS dated 10/10/2020, **UEFI mode** |
+| Storage | Disk 0: Hitachi HTS545050B9A300 (465.76 GB, GPT). Disk 1: 58.5 GB (GPT) |
+| Tools | System Information (`msinfo32`), Command Prompt, Windows PowerShell, Disk Management, Kali Linux on WSL |
+ 
+---
+ 
+## Repository structure
+ 
+```text
+.
+├── README.md          # Project overview (this file)
+├── REPORT.md          # Full lab report with calculations and evidence
+└── screenshots/       # Evidence screenshots referenced by REPORT.md
+    ├── A1_msinfo32.png
+    ├── A1_systeminfo.png
+    ├── A2_storage.png
+    ├── B1_processes.png
+    ├── C2_get_partition.png
+    ├── D1_disk_management.png
+    ├── D1_raw_gpt_read.png
+    ├── E1_boot_mode.png
+    ├── F_file_systems.png
+    └── G_os_comparison.png
+```
+ 
+---
+ 
+## Methodology
+ 
+1. **Document first, touch nothing.** Only read-only commands were used. No format, delete, resize,
+   clean, convert or write operations were run.
+2. **Identify** the system (`msinfo32`, `systeminfo`) and storage (`Get-Disk`, `Get-Partition`, `Get-Volume`, `wmic`).
+3. **Map** evidence to layers: user, application, operating system, disk, memory/process, hardware/firmware.
+4. **Observe** live processes and record names and PIDs.
+5. **Calculate** sizes with `size = sectors x bytes per sector`, divided by 1024 three times for GB.
+6. **Verify** the first two partitions by reading the GPT partition entries directly from the physical disk (read-only).
+7. **Cross-check** against what Windows reports and explain any difference (GB vs GiB, rounding, file-system overhead).
+ 
+---
+ 
+## Commands used
+ 
+```powershell
+# System and storage identification
+systeminfo
+Get-Disk | Select Number,FriendlyName,PartitionStyle,LogicalSectorSize
+Get-Partition -DiskNumber 0 | Select PartitionNumber,Type,Offset,Size
+Get-Volume
+wmic logicaldisk get caption,filesystem,size,freespace,volumename
+ 
+# Process observation
+Get-Process | Select-Object -First 20 Name,Id,CPU,WorkingSet
+tasklist
+ 
+# Boot mode evidence
+msinfo32        # BIOS Mode, Secure Boot State
+```
+ 
+```bash
+# Linux (Kali on WSL), read-only
+df -Th
+lsblk -f
+sudo blkid
+```
+ 
+---
+ 
+## Highlight: verifying partitions from the raw GPT table
+ 
+A GPT disk stores its partition entries starting at **LBA 2 (byte offset 0x400)**. Each entry is
+128 bytes. The first LBA is at byte +32 and the last LBA at byte +40. Values are **little-endian**, so
+the bytes are reversed before converting from hex.
+ 
+| Partition | Field | Raw bytes (as read) | Reversed | Decimal |
+|-----------|-------|---------------------|----------|---------|
+| 1 | First LBA | `00 08 00 00` | `00 00 08 00` | 2,048 |
+| 1 | Last LBA | `FF 27 03 00` | `00 03 27 FF` | 206,847 |
+| 2 | First LBA | `00 28 03 00` | `00 03 28 00` | 206,848 |
+| 2 | Last LBA | `FF A7 03 00` | `00 03 A7 FF` | 239,615 |
+ 
+GPT stores the **last** sector, so `sectors = last - first + 1`:
+ 
+```text
+Partition 1: 206,847 - 2,048   + 1 = 204,800 sectors
+             204,800 x 512 = 104,857,600 bytes
+             104,857,600 / 1024 / 1024 / 1024 = 0.0977 GB (100 MB)
+ 
+Partition 2: 239,615 - 206,848 + 1 = 32,768 sectors
+             32,768 x 512 = 16,777,216 bytes
+             16,777,216 / 1024 / 1024 / 1024 = 0.0156 GB (16 MB)
+```
+ 
+The read-only PowerShell used to read the table is included in [REPORT.md](REPORT.md#appendix-a-read-only-script-used-to-read-the-gpt-entries).
+ 
+---
+ 
+## Skills demonstrated
+ 
+- Digital-forensics workflow: read-only acquisition mindset, documentation and verification
+- Disk geometry, sectors, partitions and unit conversion (KB, MB, GB, GiB)
+- GPT vs MBR structure, little-endian values, hexadecimal-to-decimal conversion
+- Windows administration tools: PowerShell, CMD, Disk Management, System Information
+- Basic Linux (Kali/WSL) file-system inspection
+- Evidence-style technical writing and reporting
+ 
+---
+ 
+## Safety and ethics
+ 
+- All work was performed on **my own computer**.
+- Only read-only commands were used. The physical disk was opened for reading only.
+- Personal identifiers (serial numbers, e-mail, user and PC names) should be blurred in published screenshots.
+  Partition sizes and file-system evidence are kept visible, as the lab requires.
+ 
+---
+ 
+## Academic integrity
+ 
+This repository is a learning record. If you are taking this course, use it to understand the method,
+then perform the lab on **your own machine** and write your own report. Your partition table will be different.
+ 
+---
+ 
+## Author
+ 
+**Thobile Ngcobo**
+BSc Information Technology | Digital forensics and cybersecurity student
+Course: ICDFA CIP-B101, Basic Computer Skills for Digital Forensics
+Completed: 07 November 2026
+ 
+---
+ 
+## Acknowledgements
+ 
+Lab manual and slide material: *Computer System Introduction*, International Cybersecurity and
+Digital Forensics Academy (ICDFA), CIP-B101.
+ 
+================================================================================
+END README.md
+=======================================
 
 
 
