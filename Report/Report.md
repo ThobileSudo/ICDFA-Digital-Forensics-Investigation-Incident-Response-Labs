@@ -67,8 +67,8 @@ in use were also explained. Every step followed a read-only, repeatable method.
  
 ### A1. System specification
  
-![A1 System Information](screenshots/A1_msinfo32.png)
-![A1 systeminfo output](screenshots/A1_systeminfo.png)
+![A1 System Information](figA1_basic_system_specification.png)
+![A1 systeminfo output](screenshots/figA1_system_info.png)
  
 | Item | Value |
 |------|-------|
